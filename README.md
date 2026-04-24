@@ -12,4 +12,4 @@ Due to the high-fidelity and large size of the audio assets, we strongly recomme
 ⚠️ 因为文件过大，建议Download 到本地后使用浏览器打开
 
 开始使用 ｜ Demo
-https://koo-shanghai.github.io/Homo-Moaning-Emulator/index.html
+[https://koo-shanghai.github.io/Homo-Moaning-Emulator/index.html](https://koo-shanghai.github.io/Homo-Moaning-Emulator/)
