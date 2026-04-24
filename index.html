@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homo Moaning Emulator</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-color: #f3f4f6;
@@ -327,6 +328,55 @@
         .shake-active {
             animation: shake 0.2s cubic-bezier(.36, .07, .19, .97) both;
         }
+
+        /* Cache Button Styles */
+        .cache-container {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cache-btn {
+            width: auto;
+            min-width: 280px;
+            padding: 14px 28px;
+            background: #ffffff;
+            color: var(--primary);
+            border: 3px solid var(--primary);
+            font-weight: 800;
+            box-shadow: 4px 4px 0px var(--primary);
+            margin-top: 0;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .cache-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0px 0px 0px var(--primary);
+            transform: translate(4px, 4px);
+        }
+
+        .cache-btn:disabled {
+            background: #e5e7eb;
+            border-color: #94a3b8;
+            color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .cache-status {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 
@@ -334,6 +384,12 @@
     <div id="ripple-container"></div>
 
     <h1 class="main-title">Homo Moaning Emulator</h1>
+
+    <div class="cache-container">
+        <button id="cacheBtn" class="cache-btn">一键缓存所有音频 (Cache All Audio)</button>
+        <div id="cacheStatus" class="cache-status"></div>
+    </div>
+
     <div class="main-layout">
         <div class="container normal-play-card">
             <h3 class="track-title" style="margin-top:0;">基础功能: 正常播放</h3>
@@ -501,6 +557,63 @@
         let isLoopMode = false;
         let mainTimerId = null;
         let tickCount = 0;
+
+        // Caching Logic
+        async function cacheAllAudio() {
+            const cacheName = 'homo-moaning-emulator-cache-v1';
+            const cacheBtn = document.getElementById('cacheBtn');
+            const cacheStatus = document.getElementById('cacheStatus');
+
+            cacheBtn.disabled = true;
+            cacheBtn.textContent = '正在缓存... (Caching...)';
+
+            const urls = [];
+            // Voices
+            for (const [id, data] of Object.entries(voiceData)) {
+                for (let i = 1; i <= data.count; i++) {
+                    urls.push(`Voice/${id}/${id}_${i}.${data.ext}`);
+                }
+            }
+            // Plaps
+            for (let i = 1; i <= 23; i++) {
+                urls.push(`plaps/plap_${i}.wav`);
+            }
+
+            let cachedCount = 0;
+            const total = urls.length;
+
+            try {
+                const cache = await caches.open(cacheName);
+                for (const url of urls) {
+                    try {
+                        // Check if already in cache to avoid redundant network requests
+                        const match = await cache.match(url);
+                        if (!match) {
+                            await cache.add(url);
+                        }
+                        cachedCount++;
+                        const percent = Math.round((cachedCount / total) * 100);
+                        cacheStatus.textContent = `进度: ${percent}% (${cachedCount}/${total})`;
+                    } catch (err) {
+                        console.warn(`Failed to cache ${url}:`, err);
+                    }
+                }
+                cacheBtn.textContent = '缓存完成 (Cached)';
+                cacheStatus.textContent = `成功缓存 ${cachedCount} 个资源！ (Ready)`;
+                setTimeout(() => {
+                    cacheStatus.textContent = '';
+                    cacheBtn.disabled = false;
+                    cacheBtn.textContent = '更新/重新缓存 (Update Cache)';
+                }, 3000);
+            } catch (err) {
+                console.error('Cache API error:', err);
+                cacheBtn.disabled = false;
+                cacheBtn.textContent = '一键缓存 (Cache All)';
+                cacheStatus.textContent = '缓存失败，请检查网络或浏览器支持。';
+            }
+        }
+
+        document.getElementById('cacheBtn').addEventListener('click', cacheAllAudio);
 
         let lastPlayed = { 1: null, 2: null, 3: null };
         let nextTickTarget = { 2: 0, 3: 0 };
