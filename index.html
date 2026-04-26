@@ -334,55 +334,6 @@
         .shake-active {
             animation: shake 0.2s cubic-bezier(.36, .07, .19, .97) both;
         }
-
-        /* Cache Button Styles */
-        .cache-container {
-            width: 100%;
-            max-width: 1200px;
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .cache-btn {
-            width: auto;
-            min-width: 280px;
-            padding: 14px 28px;
-            background: #ffffff;
-            color: var(--primary);
-            border: 3px solid var(--primary);
-            font-weight: 800;
-            box-shadow: 4px 4px 0px var(--primary);
-            margin-top: 0;
-            cursor: pointer;
-            transition: all 0.1s ease;
-        }
-
-        .cache-btn:hover {
-            background: var(--primary);
-            color: #ffffff;
-            box-shadow: 0px 0px 0px var(--primary);
-            transform: translate(4px, 4px);
-        }
-
-        .cache-btn:disabled {
-            background: #e5e7eb;
-            border-color: #94a3b8;
-            color: #94a3b8;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-
-        .cache-status {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
     </style>
 </head>
 
@@ -390,11 +341,6 @@
     <div id="ripple-container"></div>
 
     <h1 class="main-title">Homo Moaning Emulator</h1>
-
-    <div class="cache-container">
-        <button id="cacheBtn" class="cache-btn">一键缓存所有音频 (Cache All Audio)</button>
-        <div id="cacheStatus" class="cache-status"></div>
-    </div>
 
     <div class="main-layout">
         <div class="container normal-play-card">
@@ -601,69 +547,6 @@
             }
             return howlPool[category];
         }
-
-        // Caching Logic
-        async function cacheAllAudio() {
-            const cacheName = 'audio-cache';
-            const cacheBtn = document.getElementById('cacheBtn');
-            const cacheStatus = document.getElementById('cacheStatus');
-
-            cacheBtn.disabled = true;
-            cacheBtn.textContent = '正在缓存... (Caching...)';
-
-            // Now we only need to cache 9 files: 8 sprites + 1 json map
-            const urls = [
-                'sprite_map.json',
-                'plaps_sprite.mp3',
-                'voice_1_sprite.mp3',
-                'voice_2_sprite.mp3',
-                'voice_3_sprite.mp3',
-                'voice_4_sprite.mp3',
-                'voice_5_sprite.mp3',
-                'voice_6_sprite.mp3',
-                'voice_7_sprite.mp3'
-            ];
-
-            let cachedCount = 0;
-            const total = urls.length;
-
-            try {
-                const cache = await caches.open(cacheName);
-                for (const url of urls) {
-                    try {
-                        const match = await cache.match(url);
-                        if (!match) {
-                            await cache.add(url);
-                        }
-                        // Pre-load the Howl object
-                        if (url.includes('_sprite.mp3')) {
-                            const category = url.replace('_sprite.mp3', '');
-                            getSpriteHowl(category);
-                        }
-                        
-                        cachedCount++;
-                        const percent = Math.round((cachedCount / total) * 100);
-                        cacheStatus.textContent = `进度: ${percent}% (${cachedCount}/${total})`;
-                    } catch (err) {
-                        console.warn(`Failed to cache ${url}:`, err);
-                    }
-                }
-                cacheBtn.textContent = '缓存完成 (Cached)';
-                cacheStatus.textContent = `成功缓存所有资源！ (Ready)`;
-                setTimeout(() => {
-                    cacheStatus.textContent = '';
-                    cacheBtn.disabled = false;
-                    cacheBtn.textContent = '检查更新 (Check Updates)';
-                }, 3000);
-            } catch (err) {
-                console.error('Cache API error:', err);
-                cacheBtn.disabled = false;
-                cacheBtn.textContent = '一键缓存 (Cache All)';
-                cacheStatus.textContent = '缓存失败，请检查网络。';
-            }
-        }
-
-        document.getElementById('cacheBtn').addEventListener('click', cacheAllAudio);
 
         let lastPlayed = { 1: null, 2: null, 3: null };
         let nextTickTarget = { 2: 0, 3: 0 };
