@@ -1,0 +1,17 @@
+{
+  "name": "Homo Moaning Emulator",
+  "short_name": "Moaning",
+  "description": "An experiment in auditory layering and the symphony of desire.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

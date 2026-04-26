@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homo Moaning Emulator</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Moaning">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <style>
         :root {
             --bg-color: #f3f4f6;
@@ -542,6 +548,15 @@
     </div>
 
     <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+
         // Audio file configuration based on directory contents
         const voiceData = {
             "1": { ext: "mp3", count: 15 },
@@ -558,9 +573,22 @@
         let mainTimerId = null;
         let tickCount = 0;
 
+        // Howler Pool
+        const howlPool = {};
+        function getHowl(src) {
+            if (!howlPool[src]) {
+                howlPool[src] = new Howl({
+                    src: [src],
+                    html5: false, // Use Web Audio API for better timing
+                    preload: true
+                });
+            }
+            return howlPool[src];
+        }
+
         // Caching Logic
         async function cacheAllAudio() {
-            const cacheName = 'homo-moaning-emulator-cache-v1';
+            const cacheName = 'audio-cache'; // Sync with sw.js
             const cacheBtn = document.getElementById('cacheBtn');
             const cacheStatus = document.getElementById('cacheStatus');
 
@@ -586,11 +614,13 @@
                 const cache = await caches.open(cacheName);
                 for (const url of urls) {
                     try {
-                        // Check if already in cache to avoid redundant network requests
                         const match = await cache.match(url);
                         if (!match) {
                             await cache.add(url);
                         }
+                        // Also pre-instantiate Howl
+                        getHowl(url);
+                        
                         cachedCount++;
                         const percent = Math.round((cachedCount / total) * 100);
                         cacheStatus.textContent = `进度: ${percent}% (${cachedCount}/${total})`;
@@ -745,9 +775,9 @@
                 src = `Voice/${voice}/${voice}_${randomNum}.${data.ext}`;
             }
 
-            const audio = new Audio(src);
-            audio.volume = parseInt(elements[trackId].volSelect.value, 10) / 100.0;
-            audio.play().catch(e => console.error(`Audio play failed (Track ${trackId}):`, e));
+            const audio = getHowl(src);
+            audio.volume(parseInt(elements[trackId].volSelect.value, 10) / 100.0);
+            audio.play();
         }
 
         function getRatio(trackId) {
