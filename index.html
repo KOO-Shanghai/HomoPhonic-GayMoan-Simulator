@@ -573,39 +573,56 @@
         let mainTimerId = null;
         let tickCount = 0;
 
-        // Howler Pool
+        // Sprite System
+        let spriteMap = null;
+        async function initSpriteSystem() {
+            try {
+                const resp = await fetch('sprite_map.json');
+                spriteMap = await resp.json();
+                console.log('Sprite map loaded');
+            } catch (err) {
+                console.error('Failed to load sprite map:', err);
+            }
+        }
+        initSpriteSystem();
+
+        // Howler Sprite Pool
         const howlPool = {};
-        function getHowl(src) {
-            if (!howlPool[src]) {
-                howlPool[src] = new Howl({
+        function getSpriteHowl(category) {
+            if (!spriteMap || !spriteMap[category]) return null;
+            if (!howlPool[category]) {
+                const src = category === 'plaps' ? 'plaps_sprite.mp3' : `${category}_sprite.mp3`;
+                howlPool[category] = new Howl({
                     src: [src],
-                    html5: false, // Use Web Audio API for better timing
+                    sprite: spriteMap[category],
+                    html5: false, // Use Web Audio API
                     preload: true
                 });
             }
-            return howlPool[src];
+            return howlPool[category];
         }
 
         // Caching Logic
         async function cacheAllAudio() {
-            const cacheName = 'audio-cache'; // Sync with sw.js
+            const cacheName = 'audio-cache';
             const cacheBtn = document.getElementById('cacheBtn');
             const cacheStatus = document.getElementById('cacheStatus');
 
             cacheBtn.disabled = true;
             cacheBtn.textContent = '正在缓存... (Caching...)';
 
-            const urls = [];
-            // Voices
-            for (const [id, data] of Object.entries(voiceData)) {
-                for (let i = 1; i <= data.count; i++) {
-                    urls.push(`Voice/${id}/${id}_${i}.${data.ext}`);
-                }
-            }
-            // Plaps
-            for (let i = 1; i <= 23; i++) {
-                urls.push(`plaps/plap_${i}.wav`);
-            }
+            // Now we only need to cache 9 files: 8 sprites + 1 json map
+            const urls = [
+                'sprite_map.json',
+                'plaps_sprite.mp3',
+                'voice_1_sprite.mp3',
+                'voice_2_sprite.mp3',
+                'voice_3_sprite.mp3',
+                'voice_4_sprite.mp3',
+                'voice_5_sprite.mp3',
+                'voice_6_sprite.mp3',
+                'voice_7_sprite.mp3'
+            ];
 
             let cachedCount = 0;
             const total = urls.length;
@@ -618,8 +635,11 @@
                         if (!match) {
                             await cache.add(url);
                         }
-                        // Also pre-instantiate Howl
-                        getHowl(url);
+                        // Pre-load the Howl object
+                        if (url.includes('_sprite.mp3')) {
+                            const category = url.replace('_sprite.mp3', '');
+                            getSpriteHowl(category);
+                        }
                         
                         cachedCount++;
                         const percent = Math.round((cachedCount / total) * 100);
@@ -629,17 +649,17 @@
                     }
                 }
                 cacheBtn.textContent = '缓存完成 (Cached)';
-                cacheStatus.textContent = `成功缓存 ${cachedCount} 个资源！ (Ready)`;
+                cacheStatus.textContent = `成功缓存所有资源！ (Ready)`;
                 setTimeout(() => {
                     cacheStatus.textContent = '';
                     cacheBtn.disabled = false;
-                    cacheBtn.textContent = '更新/重新缓存 (Update Cache)';
+                    cacheBtn.textContent = '检查更新 (Check Updates)';
                 }, 3000);
             } catch (err) {
                 console.error('Cache API error:', err);
                 cacheBtn.disabled = false;
                 cacheBtn.textContent = '一键缓存 (Cache All)';
-                cacheStatus.textContent = '缓存失败，请检查网络或浏览器支持。';
+                cacheStatus.textContent = '缓存失败，请检查网络。';
             }
         }
 
@@ -749,35 +769,35 @@
             const voice = elements[trackId].voiceSelect.value;
             if (voice === "disabled") return;
 
-            let src;
+            let category;
+            let randomNum;
             let count;
 
             if (trackId === 1) { // Plaps
+                category = "plaps";
                 count = 23;
-                let randomNum;
                 do {
                     randomNum = Math.floor(Math.random() * count) + 1;
                 } while (randomNum === lastPlayed[trackId] && count > 1);
                 lastPlayed[trackId] = randomNum;
-                src = `plaps/plap_${randomNum}.wav`;
 
                 // Visual Effects for Plaps
                 createRipple();
                 triggerShake();
             } else { // Voices
-                const data = voiceData[voice];
-                count = data.count;
-                let randomNum;
+                category = `voice_${voice}`;
+                count = voiceData[voice].count;
                 do {
                     randomNum = Math.floor(Math.random() * count) + 1;
                 } while (randomNum === lastPlayed[trackId] && count > 1);
                 lastPlayed[trackId] = randomNum;
-                src = `Voice/${voice}/${voice}_${randomNum}.${data.ext}`;
             }
 
-            const audio = getHowl(src);
-            audio.volume(parseInt(elements[trackId].volSelect.value, 10) / 100.0);
-            audio.play();
+            const audio = getSpriteHowl(category);
+            if (audio) {
+                audio.volume(parseInt(elements[trackId].volSelect.value, 10) / 100.0);
+                audio.play(String(randomNum));
+            }
         }
 
         function getRatio(trackId) {
