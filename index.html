@@ -18,7 +18,7 @@
             font-weight: bold;
             margin-bottom: 24px;
             color: var(--text-primary);
-            letter-spacing: -2px;
+            letter-spacing: 0;
             text-transform: uppercase;
         }
 
@@ -117,23 +117,23 @@
         <main class="content-area" style="padding-top: calc(env(safe-area-inset-top, 44px) + 50px); padding-bottom: 40px !important;">
             <!-- 页面 1: 普通播放 (HOME) -->
             <section id="view-normal" class="view active">
-                <h1 class="page-title">NORMAL</h1>
+                <h1 class="page-title">普通</h1>
 
                 <!-- 首页快速加载按钮 -->
                 <div id="home-load-area" class="card" style="border: 2px dashed var(--accent-color); background-color: var(--accent-light);">
                     <div id="home-load-btn" class="action-btn" style="border: none; background: var(--accent-color); color: white;">
-                        <span>LOAD AUDIO ENGINE</span>
+                        <span>加载音频引擎</span>
                     </div>
                     <p style="font-size: 0.75rem; color: var(--accent-color); text-align: center; margin-top: 10px; font-weight: bold;">
-                        Tap to unlock audio playback
+                        点击解锁音频播放
                     </p>
                 </div>
                 
                 <!-- 拍打声设置 -->
                 <div class="card">
-                    <h2 class="card-title">[ PLAP SETTINGS ]</h2>
+                    <h2 class="card-title">[ PLAP 设置 ]</h2>
                     <div class="control-group">
-                        <label>Frequency (Interval)</label>
+                        <label>频率（间隔）</label>
                         <select id="plap-interval">
                             <option value="50">0.05s (Max)</option>
                             <option value="100">0.1s</option>
@@ -150,116 +150,118 @@
 
                 <!-- 角色A设置 -->
                 <div class="card">
-                    <h2 class="card-title">[ ROLE A ]</h2>
+                    <h2 class="card-title">[ Role A ]</h2>
                     <div class="control-group">
-                        <label>Voice Type</label>
+                        <label>音色类型</label>
                         <select id="role-a-voice">
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4">Voice 4</option>
-                            <option value="5" selected>Voice 5</option>
-                            <option value="6">Voice 6</option>
-                            <option value="7">Voice 7</option>
+                            <option value="none">无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5" selected>音色 5</option>
+                            <option value="6">音色 6</option>
+                            <option value="7">音色 7</option>
                         </select>
                     </div>
                     <div class="control-group">
-                        <label>Trigger Ratio (Plaps)</label>
+                        <label>触发比例（Plaps）</label>
                         <select id="role-a-ratio">
-                            <option value="none">None</option>
-                            <option value="1">Every 1 plap</option>
-                            <option value="2">Every 2 plaps</option>
-                            <option value="3">Every 3 plaps</option>
-                            <option value="4">Every 4 plaps</option>
-                            <option value="5">Every 5 plaps</option>
-                            <option value="6">Every 6 plaps</option>
-                            <option value="random-1-3" selected>Random 1-3</option>
-                            <option value="random-4-6">Random 4-6</option>
+                            <option value="none">无声音</option>
+                            <option value="1">每 1 次 plap</option>
+                            <option value="2">每 2 次 plap</option>
+                            <option value="3">每 3 次 plap</option>
+                            <option value="4">每 4 次 plap</option>
+                            <option value="5">每 5 次 plap</option>
+                            <option value="6">每 6 次 plap</option>
+                            <option value="random-1-3" selected>随机 1-3</option>
+                            <option value="random-4-6">随机 4-6</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 角色B设置 -->
                 <div class="card">
-                    <h2 class="card-title">[ ROLE B ]</h2>
+                    <h2 class="card-title">[ Role B ]</h2>
                     <div class="control-group">
-                        <label>Voice Type</label>
+                        <label>音色类型</label>
                         <select id="role-b-voice">
-                            <option value="none">None</option>
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4">Voice 4</option>
-                            <option value="5">Voice 5</option>
-                            <option value="6" selected>Voice 6</option>
-                            <option value="7">Voice 7</option>
+                            <option value="none">无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5">音色 5</option>
+                            <option value="6" selected>音色 6</option>
+                            <option value="7">音色 7</option>
                         </select>
                     </div>
                     <div class="control-group">
-                        <label>Trigger Ratio (Plaps)</label>
+                        <label>触发比例（Plaps）</label>
                         <select id="role-b-ratio">
-                            <option value="none">None</option>
-                            <option value="1">Every 1 plap</option>
-                            <option value="2">Every 2 plaps</option>
-                            <option value="3">Every 3 plaps</option>
-                            <option value="4">Every 4 plaps</option>
-                            <option value="5">Every 5 plaps</option>
-                            <option value="6">Every 6 plaps</option>
-                            <option value="random-1-3" selected>Random 1-3</option>
-                            <option value="random-4-6">Random 4-6</option>
+                            <option value="none">无声音</option>
+                            <option value="1">每 1 次 plap</option>
+                            <option value="2">每 2 次 plap</option>
+                            <option value="3">每 3 次 plap</option>
+                            <option value="4">每 4 次 plap</option>
+                            <option value="5">每 5 次 plap</option>
+                            <option value="6">每 6 次 plap</option>
+                            <option value="random-1-3" selected>随机 1-3</option>
+                            <option value="random-4-6">随机 4-6</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="main-controls" style="margin-top: 30px;">
                     <button id="main-play-btn" class="action-btn play-btn">
-                        <span>START PLAYBACK</span>
+                        <span class="play-symbol">▶</span>
                     </button>
                 </div>
             </section>
 
             <!-- 页面 2: 循环播放 -->
             <section id="view-loop" class="view">
-                <h1 class="page-title">LOOP</h1>
+                <h1 class="page-title">循环</h1>
                 <!-- 片段数量设置 -->
                 <div class="card">
-                    <h2 class="card-title">[ LOOP CONFIG ]</h2>
+                    <h2 class="card-title">[ 循环配置 ]</h2>
                     <div class="control-group">
-                        <label>Number of Segments</label>
+                        <label>片段数量</label>
                         <select id="loop-segment-count">
-                            <option value="2">2 Segments</option>
-                            <option value="3" selected>3 Segments</option>
-                            <option value="4">4 Segments</option>
+                            <option value="2">2 段</option>
+                            <option value="3" selected>3 段</option>
+                            <option value="4">4 段</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- 全局音色设置 -->
                 <div class="card">
-                    <h2 class="card-title">[ GLOBAL VOICES ]</h2>
+                    <h2 class="card-title">[ 全局音色 ]</h2>
                     <div class="control-group">
-                        <label>Role A Voice</label>
+                        <label>Role A 音色</label>
                         <select id="loop-role-a-voice">
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4">Voice 4</option>
-                            <option value="5" selected>Voice 5</option>
-                            <option value="6">Voice 6</option>
-                            <option value="7">Voice 7</option>
+                            <option value="none">无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5" selected>音色 5</option>
+                            <option value="6">音色 6</option>
+                            <option value="7">音色 7</option>
                         </select>
                     </div>
                     <div class="control-group">
-                        <label>Role B Voice</label>
+                        <label>Role B 音色</label>
                         <select id="loop-role-b-voice">
-                            <option value="none">None</option>
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4">Voice 4</option>
-                            <option value="5">Voice 5</option>
-                            <option value="6">Voice 6</option>
-                            <option value="7" selected>Voice 7</option>
+                            <option value="none">无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5">音色 5</option>
+                            <option value="6">音色 6</option>
+                            <option value="7" selected>音色 7</option>
                         </select>
                     </div>
                 </div>
@@ -269,39 +271,233 @@
 
                 <div class="main-controls" style="margin-top: 30px;">
                     <button id="loop-play-btn" class="action-btn play-btn">
-                        <span>START LOOP</span>
+                        <span class="play-symbol">▶</span>
                     </button>
                 </div>
             </section>
 
-            <!-- 页面 3: 设置 -->
-            <section id="view-settings" class="view">
-                <h1 class="page-title">SETTINGS</h1>
-                <!-- 数据管理卡片 -->
+            <!-- 页面 3: 顺滑播放 -->
+            <section id="view-flow" class="view">
+                <h1 class="page-title">FLOW</h1>
+
                 <div class="card">
-                    <h2 class="card-title">[ CACHE MANAGEMENT ]</h2>
-                    <p class="card-desc">Clear cached audio and assets to free up space or fix issues.</p>
-                    <div class="action-btn" id="clear-cache-btn"
-                        style="border-style: dotted; font-size: 0.8rem; padding: 10px;">
-                        <span>Clear App Cache</span>
+                    <h2 class="card-title">[ FLOW 配置 ]</h2>
+                    <div class="control-group">
+                        <label>总时长</label>
+                        <select id="flow-duration">
+                            <option value="10">10s</option>
+                            <option value="20">20s</option>
+                            <option value="30">30s</option>
+                            <option value="40" selected>40s</option>
+                            <option value="50">50s</option>
+                            <option value="60">60s</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Role A 音色类型</label>
+                        <select id="flow-role-a-voice">
+                            <option value="none">无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5">音色 5</option>
+                            <option value="6" selected>音色 6</option>
+                            <option value="7">音色 7</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Role B 音色类型</label>
+                        <select id="flow-role-b-voice">
+                            <option value="none" selected>无声音</option>
+                            <option value="1">音色 1</option>
+                            <option value="2">音色 2</option>
+                            <option value="3">音色 3</option>
+                            <option value="4">音色 4</option>
+                            <option value="5">音色 5</option>
+                            <option value="6">音色 6</option>
+                            <option value="7">音色 7</option>
+                        </select>
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="flow-card-header">
+                        <h2 class="card-title flow-title-blue">[ 频率曲线 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="flow-node-minus" class="step-btn" type="button">-</button>
+                            <span id="flow-node-count-label" class="stepper-val">7</span>
+                            <button id="flow-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-card-header flow-sub-header">
+                        <h2 class="card-title flow-title-green">[ PLAP 音量 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="plap-volume-node-minus" class="step-btn" type="button">-</button>
+                            <span id="plap-volume-node-count-label" class="stepper-val">10</span>
+                            <button id="plap-volume-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-editor" id="flow-editor">
+                        <div id="flow-progress-line" class="flow-progress-line"></div>
+                        <svg class="flow-curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="flow-path" d=""></path>
+                        </svg>
+                        <div id="flow-points-layer" class="flow-points-layer"></div>
+                        <svg class="flow-curve flow-curve-green" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="plap-volume-path" d=""></path>
+                        </svg>
+                        <div id="plap-volume-points-layer" class="flow-points-layer"></div>
+                    </div>
+                    <div class="flow-axis">
+                        <span>0s</span>
+                        <span id="flow-axis-end">40s</span>
+                    </div>
+                    <div class="flow-readout" id="flow-readout">节点 1: 0.78s 间隔</div>
+                    <div class="flow-readout flow-readout-green" id="plap-volume-readout">节点 1: 100% 音量</div>
+                </div>
+
+                <div class="card">
+                    <div class="flow-card-header">
+                        <h2 class="card-title flow-title-blue">[ Role A 比例 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-a-ratio-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-a-ratio-node-count-label" class="stepper-val">4</span>
+                            <button id="role-a-ratio-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="control-group flow-toggle-row">
+                        <label for="flow-role-a-overlap">重叠保护</label>
+                        <input type="checkbox" id="flow-role-a-overlap" checked>
+                    </div>
+                    <div class="flow-card-header flow-sub-header">
+                        <h2 class="card-title flow-title-yellow">[ 相同音频概率 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-a-same-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-a-same-node-count-label" class="stepper-val">7</span>
+                            <button id="role-a-same-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-card-header flow-sub-header">
+                        <h2 class="card-title flow-title-green">[ Role A 音量 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-a-volume-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-a-volume-node-count-label" class="stepper-val">9</span>
+                            <button id="role-a-volume-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-editor" id="role-a-ratio-editor">
+                        <div id="role-a-ratio-progress-line" class="flow-progress-line"></div>
+                        <svg class="flow-curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-a-ratio-path" d=""></path>
+                        </svg>
+                        <div id="role-a-ratio-points-layer" class="flow-points-layer"></div>
+                        <svg class="flow-curve flow-curve-green" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-a-volume-path" d=""></path>
+                        </svg>
+                        <div id="role-a-volume-points-layer" class="flow-points-layer"></div>
+                        <svg class="flow-curve flow-curve-yellow" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-a-same-path" d=""></path>
+                        </svg>
+                        <div id="role-a-same-points-layer" class="flow-points-layer"></div>
+                    </div>
+                    <div class="flow-axis">
+                        <span>0s</span>
+                        <span id="role-a-ratio-axis-end">10s</span>
+                    </div>
+                    <div class="flow-readout" id="role-a-ratio-readout">节点 1: 每 4 次 plap</div>
+                    <div class="flow-readout flow-readout-yellow" id="role-a-same-readout">节点 1: 50% 相同音频</div>
+                    <div class="flow-readout flow-readout-green" id="role-a-volume-readout">节点 1: 100% 音量</div>
+                </div>
+
+                <div class="card">
+                    <div class="flow-card-header">
+                        <h2 class="card-title flow-title-blue">[ Role B 比例 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-b-ratio-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-b-ratio-node-count-label" class="stepper-val">4</span>
+                            <button id="role-b-ratio-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="control-group flow-toggle-row">
+                        <label for="flow-role-b-overlap">重叠保护</label>
+                        <input type="checkbox" id="flow-role-b-overlap" checked>
+                    </div>
+                    <div class="flow-card-header flow-sub-header">
+                        <h2 class="card-title flow-title-yellow">[ 相同音频概率 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-b-same-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-b-same-node-count-label" class="stepper-val">7</span>
+                            <button id="role-b-same-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-card-header flow-sub-header">
+                        <h2 class="card-title flow-title-green">[ Role B 音量 ]</h2>
+                        <div class="flow-node-tools">
+                            <button id="role-b-volume-node-minus" class="step-btn" type="button">-</button>
+                            <span id="role-b-volume-node-count-label" class="stepper-val">9</span>
+                            <button id="role-b-volume-node-plus" class="step-btn" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="flow-editor" id="role-b-ratio-editor">
+                        <div id="role-b-ratio-progress-line" class="flow-progress-line"></div>
+                        <svg class="flow-curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-b-ratio-path" d=""></path>
+                        </svg>
+                        <div id="role-b-ratio-points-layer" class="flow-points-layer"></div>
+                        <svg class="flow-curve flow-curve-green" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-b-volume-path" d=""></path>
+                        </svg>
+                        <div id="role-b-volume-points-layer" class="flow-points-layer"></div>
+                        <svg class="flow-curve flow-curve-yellow" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <path id="role-b-same-path" d=""></path>
+                        </svg>
+                        <div id="role-b-same-points-layer" class="flow-points-layer"></div>
+                    </div>
+                    <div class="flow-axis">
+                        <span>0s</span>
+                        <span id="role-b-ratio-axis-end">40s</span>
+                    </div>
+                    <div class="flow-readout" id="role-b-ratio-readout">节点 1: 每 4 次 plap</div>
+                    <div class="flow-readout flow-readout-yellow" id="role-b-same-readout">节点 1: 50% 相同音频</div>
+                    <div class="flow-readout flow-readout-green" id="role-b-volume-readout">节点 1: 100% 音量</div>
+                </div>
+
+                <div class="main-controls" style="margin-top: 30px;">
+                    <button id="flow-play-btn" class="action-btn play-btn">
+                        <span class="play-symbol">▶</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 页面 4: 设置 -->
+            <section id="view-settings" class="view">
+                <h1 class="page-title">设置</h1>
+                <div class="card">
+                    <h2 class="card-title">[ 语言 ]</h2>
+                    <div class="control-group">
+                        <label>界面语言</label>
+                        <select id="language-select">
+                            <option value="zh" selected>中文</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
                 <!-- 音量控制卡片 -->
                 <div class="card">
-                    <h2 class="card-title">[ VOLUME SETTINGS ]</h2>
+                    <h2 class="card-title">[ 音量设置 ]</h2>
                     <div class="control-group">
-                        <label>Plap Sound Volume</label>
+                        <label>Plap 音量</label>
                         <input type="range" id="vol-plap" min="0" max="1" step="0.01" value="1"
                             style="width:100%; height: 50px; accent-color: var(--accent-color);">
                     </div>
                     <div class="control-group">
-                        <label>Role A Volume</label>
+                        <label>Role A 音量</label>
                         <input type="range" id="vol-role-a" min="0" max="1" step="0.01" value="1"
                             style="width:100%; height: 50px; accent-color: var(--accent-color);">
                     </div>
                     <div class="control-group">
-                        <label>Role B Volume</label>
+                        <label>Role B 音量</label>
                         <input type="range" id="vol-role-b" min="0" max="1" step="0.01" value="1"
                             style="width:100%; height: 50px; accent-color: var(--accent-color);">
                     </div>
@@ -311,9 +507,10 @@
 
         <!-- 底部导航栏 -->
         <nav class="bottom-nav">
-            <button class="nav-btn active" data-target="view-normal">[ NORMAL ]</button>
-            <button class="nav-btn" data-target="view-loop">[ LOOP ]</button>
-            <button class="nav-btn" data-target="view-settings">[ SETTINGS ]</button>
+            <button class="nav-btn active" data-target="view-normal">[ 普通 ]</button>
+            <button class="nav-btn" data-target="view-loop">[ 循环 ]</button>
+            <button class="nav-btn" data-target="view-flow">[ FLOW ]</button>
+            <button class="nav-btn" data-target="view-settings">[ 设置 ]</button>
         </nav>
     </div>
 
