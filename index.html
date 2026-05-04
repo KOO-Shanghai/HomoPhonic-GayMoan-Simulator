@@ -3,87 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homo Moaning Emulator</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#000000">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Moaning">
-    <link rel="apple-touch-icon" href="icon-512.png">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <style>
-<<<<<<< Updated upstream
-        :root {
-            --bg-color: #f3f4f6;
-            --panel-bg: #ffffff;
-            --text-color: #111827;
-            --primary: #000000;
-            --primary-hover: #374151;
-            --danger: #dc2626;
-            --danger-hover: #b91c1c;
-            --border-color: #d1d5db;
-        }
-
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
-            background: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
-
-        .main-title {
-            margin: 0 0 40px 0;
-            font-size: 32px;
-            font-weight: 900;
-            text-align: center;
-            color: var(--primary);
-            letter-spacing: -1px;
-        }
-
-        .main-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        @media (min-width: 768px) {
-            .main-layout {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-        }
-
-        .container {
-            background: var(--panel-bg);
-            border: 2px solid var(--primary);
-            padding: 30px;
-            width: 100%;
-            flex: 1;
-            box-sizing: border-box;
-            box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--primary);
-=======
         /* 页面标题样式 */
         .page-title {
             font-size: 3.5rem;
@@ -91,281 +19,100 @@
             margin-bottom: 24px;
             color: var(--text-primary);
             letter-spacing: 0;
->>>>>>> Stashed changes
             text-transform: uppercase;
         }
 
-        select {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 0;
-            background: #ffffff;
-            border: 2px solid var(--border-color);
-            color: var(--text-color);
-            font-size: 15px;
-            font-weight: 500;
-            outline: none;
-            cursor: pointer;
-            transition: border-color 0.2s;
+        /* 播放按钮样式覆盖 (实线边框) */
+        .play-btn {
+            border-style: solid !important;
+        }
+
+        /* 播放状态下的文字颜色覆盖 */
+        .play-btn.playing {
+            color: white !important;
+        }
+
+        /* 自定义滑块样式 (放大拖动按钮) */
+        input[type="range"] {
+            -webkit-appearance: none;
             appearance: none;
-        }
-
-        .select-wrapper {
-            position: relative;
-        }
-
-        .select-wrapper::after {
-            content: "▼";
-            font-size: 12px;
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            pointer-events: none;
-        }
-
-        select:focus {
-            border-color: var(--primary);
-        }
-
-        button {
             width: 100%;
-            padding: 16px;
-            border-radius: 0;
-            border: 2px solid var(--primary);
-            background: var(--primary);
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 10px;
+            height: 88px;
+            /* 点击区域高度 */
+            background: transparent;
         }
 
-        button:hover {
-            background: var(--panel-bg);
-            color: var(--primary);
+        /* 轨道样式 */
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
         }
 
-        button:active {
-            transform: translateY(2px);
-        }
-
-        button.playing {
-            background: var(--danger);
-            border-color: var(--danger);
-            color: white;
-        }
-
-        button.playing:hover {
-            background: var(--panel-bg);
-            color: var(--danger);
-        }
-
-        .track-container {
-            background: #f9fafb;
-            border: 2px solid var(--border-color);
-            padding: 20px;
-            margin-bottom: 24px;
-        }
-
-        .track-title {
-            margin: 0 0 16px 0;
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 8px;
-        }
-
-        .track-container .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        .loop-section {
-            margin-top: 0;
-        }
-
-        .loop-group-block {
+        /* 拖动滑块 (Thumb) 样式 - 放大到两倍 */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 36px;
+            height: 36px;
             background: #ffffff;
-            padding: 16px;
-            margin-bottom: 16px;
-            border: 2px solid var(--border-color);
-            transition: all 0.2s ease;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            margin-top: -11px;
+            /* (轨道高度/2) - (滑块高度/2) */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .loop-group-block.active {
-            border-color: var(--primary);
-            background: #f3f4f6;
-        }
-
-        .slider-group {
+        /* Stepper 样式 */
+        .stepper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            background: var(--bg-color);
+            border: 1px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin-top: 5px;
         }
 
-        .slider-group input[type="range"] {
-            flex: 1;
-            accent-color: var(--primary);
-            height: 4px;
-            background: var(--border-color);
-            appearance: none;
-            outline: none;
+        .stepper-val {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-color);
         }
 
-        .slider-group input[type="range"]::-webkit-slider-thumb {
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            background: var(--primary);
-            cursor: pointer;
-            border-radius: 0;
-        }
-
-        .slider-value {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary);
-            min-width: 40px;
-            text-align: right;
-        }
-
-        .execute-btn {
-            background: #ffffff;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .execute-btn:hover {
-            background: var(--primary);
-            color: #ffffff;
-        }
-
-        .execute-btn.playing {
-            background: var(--danger);
-            border-color: var(--danger);
-            color: white;
-        }
-
-        .execute-btn.playing:hover {
-            background: #ffffff;
-            color: var(--danger);
-        }
-
-        .presets-card {
+        .stepper-controls {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
-            flex: 0.5;
-            min-width: 200px;
+            gap: 10px;
         }
 
-        .presets-card button {
-            margin: 0;
-            background: transparent;
-            color: var(--primary);
+        .step-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: white;
+            font-family: inherit;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .presets-card button:hover {
-            background: var(--primary);
-            color: #ffffff;
-        }
-
-        /* Ripple Effect */
-        #ripple-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .ripple {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 50%;
-            border: solid #000000;
-            pointer-events: none;
-            animation: ripple-anim 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-        }
-
-        @keyframes ripple-anim {
-            0% {
-                width: 1000px;
-                height: 1000px;
-                bottom: -3020px;
-                border-width: 1000px;
-                opacity: 1;
-            }
-
-            100% {
-                width: 5000px;
-                height: 5000px;
-                bottom: -3020px;
-                border-width: 5px;
-                opacity: 0;
-            }
-        }
-
-        /* Shake Effect */
-        @keyframes shake {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            20% {
-                transform: translate(-2px, 2px);
-            }
-
-            40% {
-                transform: translate(2px, -2px);
-            }
-
-            60% {
-                transform: translate(-2px, -1px);
-            }
-
-            80% {
-                transform: translate(1px, 2px);
-            }
-
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        .shake-active {
-            animation: shake 0.2s cubic-bezier(.36, .07, .19, .97) both;
+        .step-btn:active {
+            background-color: var(--bg-color);
+            transform: translateY(1px);
         }
     </style>
 </head>
 
 <body>
-    <div id="ripple-container"></div>
+    <div id="app">
 
-<<<<<<< Updated upstream
-    <h1 class="main-title">Homo Moaning Emulator</h1>
-
-    <div class="main-layout">
-        <div class="container normal-play-card">
-            <h3 class="track-title" style="margin-top:0;">基础功能: 正常播放</h3>
-
-            <div class="track-container">
-                <h3 class="track-title">击打 (Plaps)</h3>
-                <div class="form-group">
-                    <label for="voiceSelect1">拍打音 (Plap Sound)</label>
-                    <div class="select-wrapper">
-                        <select id="voiceSelect1">
-                            <option value="plaps" selected>开启 (Enabled)</option>
-                            <option value="disabled">禁用 (Disabled)</option>
-=======
         <!-- 页面内容区域 -->
         <main class="content-area" style="padding-top: calc(env(safe-area-inset-top, 44px) + 50px); padding-bottom: 40px !important;">
             <!-- 页面 1: 普通播放 (HOME) -->
@@ -397,63 +144,10 @@
                             <option value="900">0.9s</option>
                             <option value="1200">1.2s</option>
                             <option value="1500">1.5s (Slow)</option>
->>>>>>> Stashed changes
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="freqSelect1">频率 1 (Frequency 1)</label>
-                    <div class="select-wrapper">
-                        <select id="freqSelect1">
-                            <option value="0.15">每 0.15 秒 (0.15s)</option>
-                            <option value="0.3">每 0.3 秒 (0.3s)</option>
-                            <option value="0.6">每 0.6 秒 (0.6s)</option>
-                            <option value="0.9">每 0.9 秒 (0.9s)</option>
-                            <option value="1.2">每 1.2 秒 (1.2s)</option>
-                            <option value="1.5">每 1.5 秒 (1.5s)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>音量 (Volume)</label>
-                    <div class="slider-group">
-                        <input type="range" id="volSelect1" min="0" max="100" value="100" step="1"
-                            oninput="document.getElementById('volVal1').textContent = this.value + '%'">
-                        <span class="slider-value" id="volVal1">100%</span>
-                    </div>
-                </div>
-            </div>
 
-<<<<<<< Updated upstream
-            <div class="track-container">
-                <h3 class="track-title">角色 A (Character A)</h3>
-                <div class="form-group">
-                    <label for="voiceSelect2">角色 A 嗓音 (Voice A)</label>
-                    <div class="select-wrapper">
-                        <select id="voiceSelect2">
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4" selected>Voice 4</option>
-                            <option value="5">Voice 5</option>
-                            <option value="6">Voice 6</option>
-                            <option value="7">Voice 7</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="freqSelect2">跟随频率 (Follow Freq)</label>
-                    <div class="select-wrapper">
-                        <select id="freqSelect2">
-                            <option value="1">1/1 (同步)</option>
-                            <option value="2">1/2 (两拍一次)</option>
-                            <option value="3">1/3 (三拍一次)</option>
-                            <option value="4">1/4 (四拍一次)</option>
-                            <option value="5">1/5 (五拍一次)</option>
-                            <option value="6">1/6 (六拍一次)</option>
-                            <option value="random_high">高频随机 (High Freq Random)</option>
-                            <option value="random_low">低频随机 (Low Freq Random)</option>
-=======
                 <!-- 角色A设置 -->
                 <div class="card">
                     <h2 class="card-title">[ Role A ]</h2>
@@ -482,60 +176,10 @@
                             <option value="6">每 6 次 plap</option>
                             <option value="random-1-3" selected>随机 1-3</option>
                             <option value="random-4-6">随机 4-6</option>
->>>>>>> Stashed changes
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>音量 (Volume)</label>
-                    <div class="slider-group">
-                        <input type="range" id="volSelect2" min="0" max="100" value="100" step="1"
-                            oninput="document.getElementById('volVal2').textContent = this.value + '%'">
-                        <span class="slider-value" id="volVal2">100%</span>
-                    </div>
-                </div>
-            </div>
 
-<<<<<<< Updated upstream
-            <div class="track-container">
-                <h3 class="track-title">角色 B (Character B)</h3>
-                <div class="form-group">
-                    <label for="voiceSelect3">角色 B 嗓音 (Voice B)</label>
-                    <div class="select-wrapper">
-                        <select id="voiceSelect3">
-                            <option value="disabled">禁用 (Disabled)</option>
-                            <option value="1">Voice 1</option>
-                            <option value="2">Voice 2</option>
-                            <option value="3">Voice 3</option>
-                            <option value="4">Voice 4</option>
-                            <option value="5">Voice 5</option>
-                            <option value="6" selected>Voice 6</option>
-                            <option value="7">Voice 7</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="freqSelect3">跟随频率 (Follow Freq)</label>
-                    <div class="select-wrapper">
-                        <select id="freqSelect3">
-                            <option value="1">1/1 (同步)</option>
-                            <option value="2">1/2 (两拍一次)</option>
-                            <option value="3">1/3 (三拍一次)</option>
-                            <option value="4">1/4 (四拍一次)</option>
-                            <option value="5">1/5 (五拍一次)</option>
-                            <option value="6">1/6 (六拍一次)</option>
-                            <option value="random_high">高频随机 (High Freq Random)</option>
-                            <option value="random_low">低频随机 (Low Freq Random)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>音量 (Volume)</label>
-                    <div class="slider-group">
-                        <input type="range" id="volSelect3" min="0" max="100" value="100" step="1"
-                            oninput="document.getElementById('volVal3').textContent = this.value + '%'">
-                        <span class="slider-value" id="volVal3">100%</span>
-=======
                 <!-- 角色B设置 -->
                 <div class="card">
                     <h2 class="card-title">[ Role B ]</h2>
@@ -588,26 +232,9 @@
                             <option value="3" selected>3 段</option>
                             <option value="4">4 段</option>
                         </select>
->>>>>>> Stashed changes
                     </div>
                 </div>
-            </div>
 
-<<<<<<< Updated upstream
-            <button id="playBtn">正常播放 (Normal Play)</button>
-        </div>
-
-        <div class="container advanced-play-card">
-            <h3 class="track-title" style="margin-top:0;">高级功能: 循环组</h3>
-            <div class="form-group">
-                <label for="loopCountSelect">选择循环组数量</label>
-                <div class="select-wrapper">
-                    <select id="loopCountSelect">
-                        <option value="2" selected>2 个循环组</option>
-                        <option value="3">3 个循环组</option>
-                        <option value="4">4 个循环组</option>
-                    </select>
-=======
                 <!-- 全局音色设置 -->
                 <div class="card">
                     <h2 class="card-title">[ 全局音色 ]</h2>
@@ -637,24 +264,11 @@
                             <option value="7" selected>音色 7</option>
                         </select>
                     </div>
->>>>>>> Stashed changes
                 </div>
-            </div>
 
-            <div id="loopGroupsContainer">
-                <!-- Dynamically generated loop groups -->
-            </div>
+                <!-- 动态生成的片段卡片容器 -->
+                <div id="loop-segments-container"></div>
 
-<<<<<<< Updated upstream
-            <button id="executeLoopBtn" class="execute-btn">执行循环 (Execute Loop)</button>
-        </div>
-
-        <div class="presets-card">
-            <button id="presetA">预设 A - 快速</button>
-            <button id="presetB">预设 B - 慢速</button>
-            <button id="presetC">预设 C - 快慢循环</button>
-        </div>
-=======
                 <div class="main-controls" style="margin-top: 30px;">
                     <button id="loop-play-btn" class="action-btn play-btn">
                         <span class="play-symbol">▶</span>
@@ -898,397 +512,10 @@
             <button class="nav-btn" data-target="view-flow">[ FLOW ]</button>
             <button class="nav-btn" data-target="view-settings">[ 设置 ]</button>
         </nav>
->>>>>>> Stashed changes
     </div>
 
-    <script>
-        // PWA Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW registered:', reg))
-                    .catch(err => console.log('SW registration failed:', err));
-            });
-        }
-
-        // Audio file configuration based on directory contents
-        const voiceData = {
-            "1": { ext: "mp3", count: 15 },
-            "2": { ext: "wav", count: 20 },
-            "3": { ext: "mp3", count: 23 },
-            "4": { ext: "wav", count: 20 },
-            "5": { ext: "mp3", count: 13 },
-            "6": { ext: "mp3", count: 20 },
-            "7": { ext: "mp3", count: 19 }
-        };
-
-        let isPlaying = false;
-        let isLoopMode = false;
-        let mainTimerId = null;
-        let tickCount = 0;
-
-        // Sprite System
-        let spriteMap = null;
-        async function initSpriteSystem() {
-            try {
-                const resp = await fetch('sprite_map.json');
-                spriteMap = await resp.json();
-                console.log('Sprite map loaded');
-            } catch (err) {
-                console.error('Failed to load sprite map:', err);
-            }
-        }
-        initSpriteSystem();
-
-        // Howler Sprite Pool
-        const howlPool = {};
-        function getSpriteHowl(category) {
-            if (!spriteMap || !spriteMap[category]) return null;
-            if (!howlPool[category]) {
-                const src = category === 'plaps' ? 'plaps_sprite.mp3' : `${category}_sprite.mp3`;
-                howlPool[category] = new Howl({
-                    src: [src],
-                    sprite: spriteMap[category],
-                    html5: false, // Use Web Audio API
-                    preload: true
-                });
-            }
-            return howlPool[category];
-        }
-
-        let lastPlayed = { 1: null, 2: null, 3: null };
-        let nextTickTarget = { 2: 0, 3: 0 };
-
-        // Loop Mode States
-        let currentLoopIndex = 0;
-        let loopTimeRemainingMs = 0;
-
-        const playBtn = document.getElementById('playBtn');
-        const executeLoopBtn = document.getElementById('executeLoopBtn');
-
-        const loopCountSelect = document.getElementById('loopCountSelect');
-        const loopGroupsContainer = document.getElementById('loopGroupsContainer');
-
-        const elements = {
-            1: {
-                voiceSelect: document.getElementById('voiceSelect1'),
-                freqSelect: document.getElementById('freqSelect1'),
-                volSelect: document.getElementById('volSelect1')
-            },
-            2: {
-                voiceSelect: document.getElementById('voiceSelect2'),
-                freqSelect: document.getElementById('freqSelect2'),
-                volSelect: document.getElementById('volSelect2')
-            },
-            3: {
-                voiceSelect: document.getElementById('voiceSelect3'),
-                freqSelect: document.getElementById('freqSelect3'),
-                volSelect: document.getElementById('volSelect3')
-            }
-        };
-
-        function generateLoopGroups() {
-            const count = parseInt(loopCountSelect.value, 10);
-            loopGroupsContainer.innerHTML = '';
-            for (let i = 0; i < count; i++) {
-                const block = document.createElement('div');
-                block.className = 'loop-group-block';
-                block.id = `loopBlock_${i}`;
-                block.innerHTML = `
-                <div style="font-size:13px; font-weight:600; margin-bottom:12px; color:#94a3b8;">循环组 ${i + 1}</div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label>持续时间 (Duration)</label>
-                    <div class="slider-group">
-                        <input type="range" id="loopDuration_${i}" min="5" max="60" value="10" step="1" oninput="document.getElementById('loopDurationVal_${i}').textContent = this.value + 's'">
-                        <span class="slider-value" id="loopDurationVal_${i}">10s</span>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label>轨道 1 频率 (Track 1 Freq)</label>
-                    <div class="select-wrapper">
-                        <select id="loopFreq_${i}">
-                            <option value="0.15">每 0.15 秒 (0.15s)</option>
-                            <option value="0.3">每 0.3 秒 (0.3s)</option>
-                            <option value="0.6">每 0.6 秒 (0.6s)</option>
-                            <option value="0.9" selected>每 0.9 秒 (0.9s)</option>
-                            <option value="1.2">每 1.2 秒 (1.2s)</option>
-                            <option value="1.5">每 1.5 秒 (1.5s)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label>角色 A 嗓音跟随频率 (Voice A Freq)</label>
-                    <div class="select-wrapper">
-                        <select id="loopVoice1Freq_${i}">
-                            <option value="inherit" selected>沿用设置 (Inherit)</option>
-                            <option value="1">1/1 (同步)</option>
-                            <option value="2">1/2 (两拍一次)</option>
-                            <option value="3">1/3 (三拍一次)</option>
-                            <option value="4">1/4 (四拍一次)</option>
-                            <option value="5">1/5 (五拍一次)</option>
-                            <option value="6">1/6 (六拍一次)</option>
-                            <option value="random_high">高频随机 (High Freq Random)</option>
-                            <option value="random_low">低频随机 (Low Freq Random)</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label>角色 B 嗓音跟随频率 (Voice B Freq)</label>
-                    <div class="select-wrapper">
-                        <select id="loopVoice2Freq_${i}">
-                            <option value="inherit" selected>沿用设置 (Inherit)</option>
-                            <option value="1">1/1 (同步)</option>
-                            <option value="2">1/2 (两拍一次)</option>
-                            <option value="3">1/3 (三拍一次)</option>
-                            <option value="4">1/4 (四拍一次)</option>
-                            <option value="5">1/5 (五拍一次)</option>
-                            <option value="6">1/6 (六拍一次)</option>
-                            <option value="random_high">高频随机 (High Freq Random)</option>
-                            <option value="random_low">低频随机 (Low Freq Random)</option>
-                        </select>
-                    </div>
-                </div>
-            `;
-                loopGroupsContainer.appendChild(block);
-            }
-        }
-
-        loopCountSelect.addEventListener('change', generateLoopGroups);
-        generateLoopGroups(); // Initial render
-
-        function playTrackAudio(trackId) {
-            const voice = elements[trackId].voiceSelect.value;
-            if (voice === "disabled") return;
-
-            let category;
-            let randomNum;
-            let count;
-
-            if (trackId === 1) { // Plaps
-                category = "plaps";
-                count = 23;
-                do {
-                    randomNum = Math.floor(Math.random() * count) + 1;
-                } while (randomNum === lastPlayed[trackId] && count > 1);
-                lastPlayed[trackId] = randomNum;
-
-                // Visual Effects for Plaps
-                createRipple();
-                triggerShake();
-            } else { // Voices
-                category = `voice_${voice}`;
-                count = voiceData[voice].count;
-                do {
-                    randomNum = Math.floor(Math.random() * count) + 1;
-                } while (randomNum === lastPlayed[trackId] && count > 1);
-                lastPlayed[trackId] = randomNum;
-            }
-
-            const audio = getSpriteHowl(category);
-            if (audio) {
-                audio.volume(parseInt(elements[trackId].volSelect.value, 10) / 100.0);
-                audio.play(String(randomNum));
-            }
-        }
-
-        function getRatio(trackId) {
-            let val = elements[trackId].freqSelect.value;
-
-            if (isLoopMode && currentLoopIndex >= 0) {
-                let loopVal;
-                if (trackId === 2) loopVal = document.getElementById(`loopVoice1Freq_${currentLoopIndex}`).value;
-                if (trackId === 3) loopVal = document.getElementById(`loopVoice2Freq_${currentLoopIndex}`).value;
-
-                if (loopVal && loopVal !== "inherit") {
-                    val = loopVal;
-                }
-            }
-
-            if (val === "random_high") {
-                const options = [1, 2, 3];
-                return options[Math.floor(Math.random() * options.length)];
-            }
-            if (val === "random_low") {
-                const options = [4, 5, 6];
-                return options[Math.floor(Math.random() * options.length)];
-            }
-            return parseInt(val, 10);
-        }
-
-        function mainLoop() {
-            if (!isPlaying) return;
-
-            let intervalSec;
-
-            if (isLoopMode) {
-                if (loopTimeRemainingMs <= 0) {
-                    const prevBlock = document.getElementById(`loopBlock_${currentLoopIndex}`);
-                    if (prevBlock) prevBlock.classList.remove('active');
-
-                    const count = parseInt(loopCountSelect.value, 10);
-                    currentLoopIndex = (currentLoopIndex + 1) % count;
-
-                    const currBlock = document.getElementById(`loopBlock_${currentLoopIndex}`);
-                    if (currBlock) currBlock.classList.add('active');
-
-                    const durationSec = parseInt(document.getElementById(`loopDuration_${currentLoopIndex}`).value, 10);
-                    loopTimeRemainingMs = durationSec * 1000;
-                }
-                intervalSec = parseFloat(document.getElementById(`loopFreq_${currentLoopIndex}`).value);
-            } else {
-                intervalSec = parseFloat(elements[1].freqSelect.value);
-            }
-
-            const intervalMs = intervalSec * 1000;
-
-            if (isLoopMode) {
-                loopTimeRemainingMs -= intervalMs;
-            }
-
-            if (elements[1].voiceSelect.value !== "disabled") {
-                playTrackAudio(1);
-            }
-
-            if (elements[2].voiceSelect.value !== "disabled") {
-                if (tickCount >= nextTickTarget[2]) {
-                    playTrackAudio(2);
-                    nextTickTarget[2] = tickCount + getRatio(2);
-                }
-            }
-
-            if (elements[3].voiceSelect.value !== "disabled") {
-                if (tickCount >= nextTickTarget[3]) {
-                    playTrackAudio(3);
-                    nextTickTarget[3] = tickCount + getRatio(3);
-                }
-            }
-
-            tickCount++;
-
-            mainTimerId = setTimeout(mainLoop, intervalMs);
-        }
-
-        function stopAll() {
-            isPlaying = false;
-            isLoopMode = false;
-
-            playBtn.textContent = '正常播放 (Normal Play)';
-            playBtn.classList.remove('playing');
-
-            executeLoopBtn.textContent = '执行循环 (Execute Loop)';
-            executeLoopBtn.classList.remove('playing');
-
-            const count = parseInt(loopCountSelect.value, 10);
-            for (let i = 0; i < count; i++) {
-                const block = document.getElementById(`loopBlock_${i}`);
-                if (block) block.classList.remove('active');
-            }
-
-            if (mainTimerId) {
-                clearTimeout(mainTimerId);
-                mainTimerId = null;
-            }
-        }
-
-        function startPlayback(loopMode) {
-            if (isPlaying) stopAll(); // Stop any current playback
-
-            isPlaying = true;
-            isLoopMode = loopMode;
-
-            lastPlayed = { 1: null, 2: null, 3: null };
-            tickCount = 0;
-            nextTickTarget = { 2: 0, 3: 0 };
-
-            if (isLoopMode) {
-                executeLoopBtn.textContent = '停止执行 (Stop)';
-                executeLoopBtn.classList.add('playing');
-
-                currentLoopIndex = -1; // starts at 0 initially since remaining time is 0
-                loopTimeRemainingMs = 0;
-            } else {
-                playBtn.textContent = '停止 (Stop)';
-                playBtn.classList.add('playing');
-            }
-
-            mainLoop();
-        }
-
-        playBtn.addEventListener('click', () => {
-            if (isPlaying && !isLoopMode) stopAll();
-            else startPlayback(false);
-        });
-
-        executeLoopBtn.addEventListener('click', () => {
-            if (isPlaying && isLoopMode) stopAll();
-            else startPlayback(true);
-        });
-
-        elements[1].voiceSelect.addEventListener('change', () => { lastPlayed[1] = null; });
-        elements[2].voiceSelect.addEventListener('change', () => {
-            lastPlayed[2] = null;
-            if (isPlaying && elements[2].voiceSelect.value !== "disabled") {
-                nextTickTarget[2] = tickCount;
-            }
-        });
-        elements[3].voiceSelect.addEventListener('change', () => {
-            lastPlayed[3] = null;
-            if (isPlaying && elements[3].voiceSelect.value !== "disabled") {
-                nextTickTarget[3] = tickCount;
-            }
-        });
-
-        // Preset Button Logic
-        document.getElementById('presetA').addEventListener('click', () => {
-            elements[1].freqSelect.value = "0.3";
-            elements[2].freqSelect.value = "random_low";
-            elements[3].freqSelect.value = "random_low";
-        });
-
-        document.getElementById('presetB').addEventListener('click', () => {
-            elements[1].freqSelect.value = "0.9";
-            elements[2].freqSelect.value = "random_high";
-            elements[3].freqSelect.value = "random_high";
-        });
-
-        document.getElementById('presetC').addEventListener('click', () => {
-            loopCountSelect.value = "2";
-            generateLoopGroups(); // Force DOM rebuild
-
-            // Group 1: 15s Preset A
-            document.getElementById('loopDuration_0').value = "15";
-            document.getElementById('loopDurationVal_0').textContent = "15s";
-            document.getElementById('loopFreq_0').value = "0.3";
-            document.getElementById('loopVoice1Freq_0').value = "random_low";
-            document.getElementById('loopVoice2Freq_0').value = "random_low";
-
-            // Group 2: 10s Preset B
-            document.getElementById('loopDuration_1').value = "10";
-            document.getElementById('loopDurationVal_1').textContent = "10s";
-            document.getElementById('loopFreq_1').value = "0.9";
-            document.getElementById('loopVoice1Freq_1').value = "random_high";
-            document.getElementById('loopVoice2Freq_1').value = "random_high";
-        });
-
-        // Effect Functions
-        function createRipple() {
-            const container = document.getElementById('ripple-container');
-            if (!container) return;
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            container.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 1500);
-        }
-
-        function triggerShake() {
-            const container = document.getElementById('ripple-container');
-            if (!container) return;
-            container.classList.remove('shake-active');
-            void container.offsetWidth; // trigger reflow
-            container.classList.add('shake-active');
-        }
-
-    </script>
+    <script src="audio-engine.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>

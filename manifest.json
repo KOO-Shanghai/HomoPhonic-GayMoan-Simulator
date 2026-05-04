@@ -1,14 +1,20 @@
 {
-  "name": "Homo Moaning Emulator",
-  "short_name": "Moaning",
-  "description": "An experiment in auditory layering and the symphony of desire.",
+  "name": "Audio Player",
+  "short_name": "Audio PWA",
+  "description": "Multi-track audio player for iOS",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f3f4f6",
-  "theme_color": "#000000",
+  "background_color": "#f8f9fa",
+  "theme_color": "#0d9488",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

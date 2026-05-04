@@ -1,48 +1,60 @@
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.js');
+const CACHE_NAME = 'audio-pwa-v3';
+const urlsToCache = [
+  './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './audio-engine.js',
+  './audio/sprite.json',
+  './audio/sprite.mp3',
+  './manifest.json'
+];
 
-if (workbox) {
-  console.log('Workbox is loaded');
+self.addEventListener('install', event => {
+  self.skipWaiting(); // 强制立即接管
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
 
-  // Cache the index.html and manifest
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'document' || request.destination === 'manifest',
-    new workbox.strategies.StaleWhileRevalidate({
-      cacheName: 'app-shell',
+self.addEventListener('fetch', event => {
+  // 开发阶段使用 Network First 策略
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // 更新缓存
+        if (response && response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+                cache.put(event.request, responseClone);
+            });
+        }
+        return response;
+      })
+      .catch(() => {
+        // 网络失败时回退到缓存
+        return caches.match(event.request);
+      })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    clients.claim().then(() => {
+      const cacheWhitelist = [CACHE_NAME];
+      return caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheWhitelist.indexOf(cacheName) === -1) {
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      });
     })
   );
-
-  // Cache CSS and JS files
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'style' || request.destination === 'script',
-    new workbox.strategies.StaleWhileRevalidate({
-      cacheName: 'assets',
-    })
-  );
-
-  // Cache Audio files with a Cache-First strategy
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'audio' || request.url.includes('.mp3') || request.url.includes('.wav'),
-    new workbox.strategies.CacheFirst({
-      cacheName: 'audio-cache',
-      plugins: [
-        new workbox.expiration.ExpirationPlugin({
-          maxEntries: 200,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
-        }),
-        new workbox.cacheableResponse.CacheableResponsePlugin({
-          statuses: [0, 200],
-        }),
-      ],
-    })
-  );
-
-  // Cache icons
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === 'image',
-    new workbox.strategies.CacheFirst({
-      cacheName: 'images',
-    })
-  );
-} else {
-  console.log('Workbox failed to load');
-}
+});
